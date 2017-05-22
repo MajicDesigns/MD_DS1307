@@ -8,6 +8,9 @@
 	* Access to the 64 byte battery backed up RAM
 	* Control of square wave generator (on/off & frequency)
 	* Control of clock features (on/off, 12/24H, day of week)
+
+  v1.3 May 2017
+  - Changed exmples to remove 'deprecated' compiler warning.
   
   v1.2 April 2016
   - Fixed bug in setting the time when in 12 hour mode.

@@ -1,3 +1,7 @@
+// Example program for the MD_DS1307 library
+//
+// Implements a clock display on a LCD shield.
+
 #include <LiquidCrystal.h>
 #include <MD_DS1307.h>
 #include <Wire.h>
@@ -18,9 +22,9 @@ void p2dig(uint8_t v)
   lcd.print(v);
 }
 
-char *dow2String(uint8_t code)
+const char *dow2String(uint8_t code)
 {
-  static char *str[] = {"Sun ", "Mon ", "Tue ", "Wed ", "Thu ", "Fri ", "Sat "};
+  static const char *str[] = {"Sun ", "Mon ", "Tue ", "Wed ", "Thu ", "Fri ", "Sat "};
   return(str[code-1]);
 }
 
