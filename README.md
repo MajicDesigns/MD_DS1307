@@ -1,3 +1,5 @@
+## MD_DS1307
+
 Library for using a DS1307 RTC with the Arduino platform.
 
 Exposes access to all on-chip capability
@@ -9,3 +11,5 @@ Exposes access to all on-chip capability
 Example code supplied to 
 * Manage the DS1307 using the Serial Console
 * Display the time on a LCD display
+
+[Library Documentation](https://majicdesigns.github.io/MD_DS1307/)

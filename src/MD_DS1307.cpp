@@ -60,7 +60,7 @@ uint8_t MD_DS1307::readDevice(uint8_t addr, uint8_t* buf, uint8_t len)
     return(0);
 	
   Wire.requestFrom(DS1307_ID, (int)len);
-  while (!Wire.available()) ;	// wait
+  // while (!Wire.available()) ;	// wait - commented out Github issue #2
   for (uint8_t i=0; i<len; i++) // Read x data from given address upwards...
   {
     buf[i] = Wire.read();       // ... and store it in the buffer

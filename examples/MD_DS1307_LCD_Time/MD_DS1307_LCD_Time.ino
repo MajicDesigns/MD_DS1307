@@ -10,9 +10,14 @@ LiquidCrystal lcd(8, 9, 4, 5, 6, 7);
 
 void setup()
 {
+  // initialise the LCD
   lcd.begin(16,2);
   lcd.clear();
   lcd.noCursor();
+
+  // Ensure the clock is running
+  if (!RTC.isRunning())
+    RTC.control(DS1307_CLOCK_HALT, DS1307_OFF);
 }
 
 void p2dig(uint8_t v)
@@ -24,8 +29,8 @@ void p2dig(uint8_t v)
 
 const char *dow2String(uint8_t code)
 {
-  static const char *str[] = {"Sun ", "Mon ", "Tue ", "Wed ", "Thu ", "Fri ", "Sat "};
-  return(str[code-1]);
+  static const char *str[] = {"--- ", "Sun ", "Mon ", "Tue ", "Wed ", "Thu ", "Fri ", "Sat "};
+  return(str[code]);
 }
 
 void printTime()

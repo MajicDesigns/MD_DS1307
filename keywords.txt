@@ -1,7 +1,6 @@
 RTC	KEYWORD1
 readTime	KEYWORD2
 writeTime	KEYWORD2
-now	KEYWORD2
 readRAM	KEYWORD2
 writeRAM	KEYWORD2
 control	KEYWORD2
@@ -9,4 +8,4 @@ status	KEYWORD2
 now	KEYWORD2
 isRunning	KEYWORD2
 calcDoW	KEYWORD2
-	
+
