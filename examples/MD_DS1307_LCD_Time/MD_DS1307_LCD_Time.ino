@@ -30,6 +30,8 @@ void p2dig(uint8_t v)
 const char *dow2String(uint8_t code)
 {
   static const char *str[] = {"--- ", "Sun ", "Mon ", "Tue ", "Wed ", "Thu ", "Fri ", "Sat "};
+
+  if (code > 7) code = 0;
   return(str[code]);
 }
 
@@ -42,7 +44,7 @@ void printTime()
   p2dig(RTC.mm);
   lcd.print("-");
   p2dig(RTC.dd);
-  
+
   lcd.setCursor(0,1);
   p2dig(RTC.h);
   lcd.print(":");
