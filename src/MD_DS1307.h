@@ -34,6 +34,9 @@ ___
 
 Revision History 
 ----------------
+Jun 2018 version 1.3.3
+- Added overloaded constructor specifying sca and scl.
+
 Apr 2018 version 1.3.2
 - Minor changes to code
 
@@ -170,7 +173,7 @@ class MD_DS1307
  /**
   * Overloaded Class Constructor
   *
-  * Provides a way to assign custom SCL and SDA pins if the Architecture
+  * Provides a way to assign custom SCL and SDA pins if the architecture
   * supports them.
   *
   * \param sda  Pin number for the SDA signal
