@@ -166,6 +166,16 @@ class MD_DS1307
   * 
   */
   MD_DS1307();
+ /**
+  * Overloaded Class Constructor
+  *
+  * Provides a way to assign custom SCL and SDA pins if the Architecture
+  * supports them.
+  *
+  * \param sda  Pin number for the SDA signal
+  * \param scl  Pin number for the SCL signal
+  */
+  MD_DS1307(int sda, int scl);
 
  //--------------------------------------------------------------
  /** \name Methods for object and hardware control.
@@ -329,6 +339,9 @@ private:
   // Interface functions for the RTC device
   uint8_t readDevice(uint8_t addr, uint8_t* buf, uint8_t len);
   uint8_t writeDevice(uint8_t addr, uint8_t* buf, uint8_t len);
+  
+  // Functions to Initialize the class internal variables
+  void init(void);
 };
 
 extern MD_DS1307 RTC;     ///< Library created instance of the RTC class
