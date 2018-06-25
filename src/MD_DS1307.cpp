@@ -96,7 +96,7 @@ MD_DS1307::MD_DS1307()
   Wire.begin();
 }
 
-MD_DS1307::MD_DS1307(int sda, int scl)
+MD_DS1307::MD_DS1307(uint8_t sda, uint8_t scl)
 {
   init();
   Wire.begin(sda, scl);
