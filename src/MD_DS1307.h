@@ -166,6 +166,7 @@ class MD_DS1307
   * 
   */
   MD_DS1307();
+#ifdef ESP8266  
  /**
   * Overloaded Class Constructor
   *
@@ -176,7 +177,7 @@ class MD_DS1307
   * \param scl  Pin number for the SCL signal
   */
   MD_DS1307(int sda, int scl);
-
+#endif
  //--------------------------------------------------------------
  /** \name Methods for object and hardware control.
   * @{
