@@ -34,6 +34,9 @@ ___
 
 Revision History 
 ----------------
+Jun 2018 version 1.3.4
+- Cleaned up dependency on ESP8266 for constructor change.
+
 Jun 2018 version 1.3.3
 - Added overloaded constructor specifying sca and scl.
 
@@ -169,9 +172,9 @@ class MD_DS1307
   * 
   */
   MD_DS1307();
-#ifdef ESP8266  
- /**
-  * Overloaded Class Constructor
+
+  /**
+  * Overloaded Class Constructor (ESP8266 only)
   *
   * Provides a way to assign custom SCL and SDA pins if the architecture
   * supports them.
@@ -180,8 +183,8 @@ class MD_DS1307
   * \param scl  Pin number for the SCL signal
   */
   MD_DS1307(int sda, int scl);
-#endif
- //--------------------------------------------------------------
+
+  //--------------------------------------------------------------
  /** \name Methods for object and hardware control.
   * @{
   */

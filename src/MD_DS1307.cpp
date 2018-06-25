@@ -137,13 +137,13 @@ void MD_DS1307::writeTime(void)
   uint8_t	mode12;
 
   // check what time mode is current
-  readDevice(ADDR_HR, &mode12, 1);		
+  readDevice(ADDR_HR, &mode12, 1);
   mode12 &= CTL_12H;
 
   // pack it up in the current space
   bufRTC[ADDR_SEC] = bin2BCD(s);
   bufRTC[ADDR_MIN] = bin2BCD(m);
-  if (mode12)				// 12 hour clock
+  if (mode12)     // 12 hour clock
   {
     pm = (h > 12);
     if (pm) h -= 12;
@@ -166,11 +166,11 @@ uint8_t MD_DS1307::readRAM(uint8_t addr, uint8_t* buf, uint8_t len)
 // Read len bytes from the RTC, starting at address addr, and put them in buf
 // Reading includes all bytes at addresses RAM_BASE_READ to DS1307_RAM_MAX
 {
-  if ((NULL == buf) /*|| (addr < RAM_BASE_READ)*/ ||
+  if ((NULL == buf) || (addr < RAM_BASE_READ) ||
       (len == 0) ||(addr + len - 1 > DS1307_RAM_MAX))
     return(0);
 
-  return(readDevice(addr, buf, len));		// read all the data once
+  return(readDevice(addr, buf, len));   // read all the data once
 }
 
 uint8_t MD_DS1307::writeRAM(uint8_t addr, uint8_t* buf, uint8_t len)
@@ -181,7 +181,7 @@ uint8_t MD_DS1307::writeRAM(uint8_t addr, uint8_t* buf, uint8_t len)
   if ((NULL == buf) || (addr < RAM_BASE_WRITE) || (len == 0) || (addr + len - 1 >= DS1307_RAM_MAX))
     return(0);
 
-  return(writeDevice(addr, buf, len));	// write all the data at once
+  return(writeDevice(addr, buf, len));  // write all the data at once
 }
 
 uint8_t MD_DS1307::calcDoW(uint16_t yyyy, uint8_t mm, uint8_t dd) 

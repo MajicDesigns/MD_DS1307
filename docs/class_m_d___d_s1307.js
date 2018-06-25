@@ -1,7 +1,7 @@
 var class_m_d___d_s1307 =
 [
     [ "MD_DS1307", "class_m_d___d_s1307.html#a385d43616f4ea92356852e5a83fb5b3e", null ],
-    [ "MD_DS1307", "class_m_d___d_s1307.html#adf5a677f59b02203dc1c8145d444f7ad", null ],
+    [ "MD_DS1307", "class_m_d___d_s1307.html#a77e0cbcd07064a756dbf562de3217f6c", null ],
     [ "calcDoW", "class_m_d___d_s1307.html#a3ede82a093f3721371304fd806ff0cae", null ],
     [ "control", "class_m_d___d_s1307.html#a094cf2b307045357c50b4d64a92420c7", null ],
     [ "isRunning", "class_m_d___d_s1307.html#a05cff9941dcbbab0952cff4545570a35", null ],
