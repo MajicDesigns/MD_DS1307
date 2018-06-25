@@ -106,18 +106,20 @@ uint8_t i2dig(uint8_t mode)
 
 char htoa(uint8_t i)
 {
-  if (i >= 0 && i <= 9)
+  if (i < 10)
+  {
     return(i + '0');
-  if (i >= 10 && i <= 15)
+  }
+  else if (i < 16)
+  {
     return(i - 10 + 'a');
-
+  }
   return('?');
 }
 
 const char *p2dig(uint8_t v, uint8_t mode)
 // print 2 digits leading zero
 {
-  uint8_t n = 0;
   static char c[3] = { "00" };
 
   switch(mode)

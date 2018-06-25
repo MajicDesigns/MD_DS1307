@@ -20,36 +20,38 @@ class MD_DS1307 RTC;  // one instance created when library is included
 #define RAM_BASE_WRITE  8 // smallest write address
 
 // Addresses for the parts of the date/time in RAM
-#define ADDR_SEC  0x0
-#define ADDR_MIN  0x1
-#define ADDR_HR   0x2
-#define ADDR_DAY  0x3
-#define ADDR_DATE 0x4
-#define ADDR_MON  0x5
-#define ADDR_YR   0x6
+#define ADDR_SEC  ((uint8_t)0x0)
+#define ADDR_MIN  ((uint8_t)0x1)
+#define ADDR_HR   ((uint8_t)0x2)
+#define ADDR_DAY  ((uint8_t)0x3)
+#define ADDR_DATE ((uint8_t)0x4)
+#define ADDR_MON  ((uint8_t)0x5)
+#define ADDR_YR   ((uint8_t)0x6)
 
 // Address for the special control bytes
-#define ADDR_CTL_CH   0x0
-#define ADDR_CTL_12H  0x2
-#define ADDR_CTL_OUT  0x7
-#define ADDR_CTL_SQWE 0x7
-#define ADDR_CTL_RS   0x7
+#define ADDR_CTL_CH   ((uint8_t)0x0)
+#define ADDR_CTL_12H  ((uint8_t)0x2)
+#define ADDR_CTL_OUT  ((uint8_t)0x7)
+#define ADDR_CTL_SQWE ((uint8_t)0x7)
+#define ADDR_CTL_RS   ((uint8_t)0x7)
 
 // Bit masks for the control/testable bits
-#define CTL_CH    0x80
-#define CTL_12H   0x40
-#define CTL_PM    0x20
-#define CTL_OUT   0x80
-#define CTL_SQWE  0x10
-#define CTL_RS    0x03
+#define CTL_CH    ((uint8_t)0x80)
+#define CTL_12H   ((uint8_t)0x40)
+#define CTL_PM    ((uint8_t)0x20)
+#define CTL_OUT   ((uint8_t)0x80)
+#define CTL_SQWE  ((uint8_t)0x10)
+#define CTL_RS    ((uint8_t)0x03)
 
 // Define a global buffer we can use in these functions
 #define MAX_BUF   8     // time message is the biggest message we need to handle (7 bytes)
 uint8_t	bufRTC[MAX_BUF];
 
 // BCD to binary number packing/unpacking functions
+/*  // Second time Definitions
 static uint8_t BCD2bin(uint8_t v) { return v - 6 * (v >> 4); }
 static uint8_t bin2BCD (uint8_t v) { return v + 6 * (v / 10); }
+*/
 
 // Interface functions for the RTC device
 uint8_t MD_DS1307::readDevice(uint8_t addr, uint8_t* buf, uint8_t len)
@@ -96,11 +98,13 @@ MD_DS1307::MD_DS1307()
   Wire.begin();
 }
 
-MD_DS1307::MD_DS1307(uint8_t sda, uint8_t scl)
+#ifdef ESP8266
+MD_DS1307::MD_DS1307(int sda, int scl)
 {
   init();
   Wire.begin(sda, scl);
 }
+#endif
  
 void MD_DS1307::readTime(void)
 // Read the current time from the RTC and unpack it into the object variables
@@ -162,7 +166,8 @@ uint8_t MD_DS1307::readRAM(uint8_t addr, uint8_t* buf, uint8_t len)
 // Read len bytes from the RTC, starting at address addr, and put them in buf
 // Reading includes all bytes at addresses RAM_BASE_READ to DS1307_RAM_MAX
 {
-  if ((NULL == buf) || (addr < RAM_BASE_READ) || (len == 0) ||(addr + len - 1 > DS1307_RAM_MAX))
+  if ((NULL == buf) /*|| (addr < RAM_BASE_READ)*/ ||
+      (len == 0) ||(addr + len - 1 > DS1307_RAM_MAX))
     return(0);
 
   return(readDevice(addr, buf, len));		// read all the data once
@@ -201,7 +206,7 @@ void MD_DS1307::control(uint8_t item, uint8_t value)
   {
     case DS1307_CLOCK_HALT:
       addr = ADDR_CTL_CH;
-      mask = ~CTL_CH;
+      mask = (uint8_t)~CTL_CH;
       switch (value)
       {
         case DS1307_ON:  cmd = CTL_CH;  break;
@@ -212,7 +217,7 @@ void MD_DS1307::control(uint8_t item, uint8_t value)
 
     case DS1307_SQW_RUN:
       addr = ADDR_CTL_SQWE;
-      mask = ~CTL_SQWE;
+      mask = (uint8_t)~CTL_SQWE;
       switch (value)
       {
         case DS1307_ON:  cmd = CTL_SQWE;  break;
@@ -223,7 +228,7 @@ void MD_DS1307::control(uint8_t item, uint8_t value)
 
     case DS1307_SQW_TYPE_ON:
       addr = ADDR_CTL_RS;
-      mask = ~CTL_RS;
+      mask = (uint8_t)~CTL_RS;
       switch (value)
       {
         case DS1307_SQW_1HZ:  cmd = 0x00; break;
@@ -236,7 +241,7 @@ void MD_DS1307::control(uint8_t item, uint8_t value)
 
     case DS1307_SQW_TYPE_OFF:
       addr = ADDR_CTL_OUT;
-      mask = ~CTL_OUT;
+      mask = (uint8_t)~CTL_OUT;
       switch (value)
       {
         case DS1307_SQW_LOW:  cmd = 0;        break;
@@ -247,7 +252,7 @@ void MD_DS1307::control(uint8_t item, uint8_t value)
 
     case DS1307_12H:
       addr = ADDR_CTL_12H;
-      mask = ~CTL_12H;
+      mask = (uint8_t)~CTL_12H;
       switch (value)
       {
         case DS1307_ON:  cmd = CTL_12H; break;
