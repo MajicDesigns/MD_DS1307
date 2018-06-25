@@ -82,13 +82,24 @@ uint8_t MD_DS1307::writeDevice(uint8_t addr, uint8_t* buf, uint8_t len)
   return(len);
 }
 
-// Class functions
-MD_DS1307::MD_DS1307()
+void MD_DS1307::init()
 {
   yyyy = mm = dd = 0;
   h = m = s = 0;
   dow = 0;
+}
+
+// Class functions
+MD_DS1307::MD_DS1307()
+{
+  init();
   Wire.begin();
+}
+
+MD_DS1307::MD_DS1307(int sda, int scl)
+{
+  init();
+  Wire.begin(sda, scl);
 }
  
 void MD_DS1307::readTime(void)
