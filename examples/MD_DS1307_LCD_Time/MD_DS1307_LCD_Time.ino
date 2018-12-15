@@ -6,6 +6,12 @@
 #include <MD_DS1307.h>
 #include <Wire.h>
 
+#ifdef ARDUINO_ARCH_SAMD
+MD_DS1307 myRTC;  ///< Locally created instance of the RTC class
+#else
+#define myRTC RTC ///< Library created instance of the RTC class
+#endif
+
 LiquidCrystal lcd(8, 9, 4, 5, 6, 7);
 
 void setup()
@@ -16,8 +22,8 @@ void setup()
   lcd.noCursor();
 
   // Ensure the clock is running
-  if (!RTC.isRunning())
-    RTC.control(DS1307_CLOCK_HALT, DS1307_OFF);
+  if (!myRTC.isRunning())
+    myRTC.control(DS1307_CLOCK_HALT, DS1307_OFF);
 }
 
 void p2dig(uint8_t v)
@@ -38,26 +44,26 @@ const char *dow2String(uint8_t code)
 void printTime()
 {
   lcd.setCursor(0,0);
-  lcd.print(dow2String(RTC.dow));
-  lcd.print(RTC.yyyy);
+  lcd.print(dow2String(myRTC.dow));
+  lcd.print(myRTC.yyyy);
   lcd.print("-");
-  p2dig(RTC.mm);
+  p2dig(myRTC.mm);
   lcd.print("-");
-  p2dig(RTC.dd);
+  p2dig(myRTC.dd);
 
   lcd.setCursor(0,1);
-  p2dig(RTC.h);
+  p2dig(myRTC.h);
   lcd.print(":");
-  p2dig(RTC.m);
+  p2dig(myRTC.m);
   lcd.print(":");
-  p2dig(RTC.s);
-  if (RTC.status(DS1307_12H) == DS1307_ON)
-    lcd.print(RTC.pm ? " pm" : " am");
+  p2dig(myRTC.s);
+  if (myRTC.status(DS1307_12H) == DS1307_ON)
+    lcd.print(myRTC.pm ? " pm" : " am");
 }
 
 void loop()
 {
-  RTC.readTime();
+  myRTC.readTime();
   printTime(); 
   delay(100);
 }

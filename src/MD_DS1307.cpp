@@ -11,7 +11,9 @@
 #include "MD_DS1307.h"
 #include <Wire.h>
 
+#ifndef ARDUINO_ARCH_SAMD
 class MD_DS1307 RTC;  // one instance created when library is included
+#endif
 
 // Useful definitions
 #define	DS1307_ID	0x68  // I2C/TWI device address, coded into the device
@@ -178,7 +180,8 @@ uint8_t MD_DS1307::writeRAM(uint8_t addr, uint8_t* buf, uint8_t len)
 // Writing addresses excludes the RTC registers, so valid addresses are 
 // RAM_BASE_WRITE to DS1307_RAM_MAX
 {
-  if ((NULL == buf) || (addr < RAM_BASE_WRITE) || (len == 0) || (addr + len - 1 >= DS1307_RAM_MAX))
+  if ((NULL == buf) || (addr < RAM_BASE_WRITE) || 
+      (len == 0) || (addr + len - 1 >= DS1307_RAM_MAX))
     return(0);
 
   return(writeDevice(addr, buf, len));  // write all the data at once

@@ -8,6 +8,12 @@
 #define PRINTS(s) Serial.print(F(s));
 #define PRINT(s, v) { Serial.print(F(s)); Serial.print(v); }
 
+#ifdef ARDUINO_ARCH_SAMD
+MD_DS1307 myRTC;  ///< Locally created instance of the RTC class
+#else
+#define myRTC RTC ///< Library created instance of the RTC class
+#endif
+
 void setup()
 {
   Serial.begin(57600);
@@ -144,30 +150,30 @@ const char *p2dig(uint8_t v, uint8_t mode)
 
 void showStatus()
 {
-  PRINT("\nClock Halt:\t", sts2String(RTC.status(DS1307_CLOCK_HALT)));
-  PRINT("\nIs running:\t", RTC.isRunning());
-  PRINT("\nSQW Output:\t", sts2String(RTC.status(DS1307_SQW_RUN)));
-  PRINT("\nSQW Type (on):\t", sts2String(RTC.status(DS1307_SQW_TYPE_ON)));
-  PRINT("\nSQW Type (off):\t", sts2String(RTC.status(DS1307_SQW_TYPE_OFF)));
-  PRINT("\n12h mode:\t", sts2String(RTC.status(DS1307_12H)));
+  PRINT("\nClock Halt:\t", sts2String(myRTC.status(DS1307_CLOCK_HALT)));
+  PRINT("\nIs running:\t", myRTC.isRunning());
+  PRINT("\nSQW Output:\t", sts2String(myRTC.status(DS1307_SQW_RUN)));
+  PRINT("\nSQW Type (on):\t", sts2String(myRTC.status(DS1307_SQW_TYPE_ON)));
+  PRINT("\nSQW Type (off):\t", sts2String(myRTC.status(DS1307_SQW_TYPE_OFF)));
+  PRINT("\n12h mode:\t", sts2String(myRTC.status(DS1307_12H)));
 }
 
 void printTime()
 {
-  PRINT("", RTC.yyyy);
-  PRINT("-", p2dig(RTC.mm, DEC));
-  PRINT("-", p2dig(RTC.dd, DEC));
-  PRINT(" ", p2dig(RTC.h, DEC));
-  PRINT(":", p2dig(RTC.m, DEC));
-  PRINT(":", p2dig(RTC.s, DEC));
-  if (RTC.status(DS1307_12H) == DS1307_ON)
-    PRINT(" ", RTC.pm ? "pm" : "am");
-  PRINT(" ", dow2String(RTC.dow));
+  PRINT("", myRTC.yyyy);
+  PRINT("-", p2dig(myRTC.mm, DEC));
+  PRINT("-", p2dig(myRTC.dd, DEC));
+  PRINT(" ", p2dig(myRTC.h, DEC));
+  PRINT(":", p2dig(myRTC.m, DEC));
+  PRINT(":", p2dig(myRTC.s, DEC));
+  if (myRTC.status(DS1307_12H) == DS1307_ON)
+    PRINT(" ", myRTC.pm ? "pm" : "am");
+  PRINT(" ", dow2String(myRTC.dow));
 }
 
 void showTime()
 {
-  RTC.readTime();
+  myRTC.readTime();
   PRINTS("\n");
   printTime();
 }
@@ -180,7 +186,7 @@ void showRAM()
 
   for (int i=0; i<DS1307_RAM_MAX; i+=MAX_READ_BUF)
   {
-    RTC.readRAM(i, buf, MAX_READ_BUF);
+    myRTC.readRAM(i, buf, MAX_READ_BUF);
     
     PRINT("\n", p2dig(i, HEX));
     PRINTS(":");
@@ -219,32 +225,32 @@ void writeRAM()
   for (int i=0; i<len; i++)
     PRINT(" ", p2dig(val[i], HEX));
   
-  PRINT("\n", RTC.writeRAM(addr, val, len));
+  PRINT("\n", myRTC.writeRAM(addr, val, len));
   PRINTS(" bytes written");
 }
 
 void showDoW(void)
 {
-  RTC.readTime();
-  PRINT("\nCalculated DoW is ", dow2String(RTC.calcDoW(RTC.yyyy, RTC.mm, RTC.dd)));
+  myRTC.readTime();
+  PRINT("\nCalculated DoW is ", dow2String(myRTC.calcDoW(myRTC.yyyy, myRTC.mm, myRTC.dd)));
 }
 
 void writeTime()
 {
-  RTC.yyyy = i2dig(DEC)*100 + i2dig(DEC);
-  RTC.mm = i2dig(DEC);
-  RTC.dd = i2dig(DEC);
+  myRTC.yyyy = i2dig(DEC)*100 + i2dig(DEC);
+  myRTC.mm = i2dig(DEC);
+  myRTC.dd = i2dig(DEC);
   
-  RTC.h = i2dig(DEC);
-  RTC.m = i2dig(DEC);
-  RTC.s = i2dig(DEC);
+  myRTC.h = i2dig(DEC);
+  myRTC.m = i2dig(DEC);
+  myRTC.s = i2dig(DEC);
   
-  RTC.dow = i2dig(DEC);
+  myRTC.dow = i2dig(DEC);
   
   PRINTS("\nWriting ");
   printTime();
   
-  RTC.writeTime(); 
+  myRTC.writeTime(); 
 }
 
 void writeControl()
@@ -321,7 +327,7 @@ void writeControl()
   PRINT("\nControlling ", ctl2String(item));
   PRINT(" value ", sts2String(value));
   
-  RTC.control(item, value);
+  myRTC.control(item, value);
   
   return;
 }

@@ -26,6 +26,7 @@ This library features access to all on-chip features
 - Control of square wave generator (on/off & frequency)
 - Control of clock features (on/off, 12/24H, day of week)
 
+If you like and use this library please consider making a small donation using [PayPal](https://paypal.me/MajicDesigns/4USD)
 ___
 
 \subpage pageSoftware
@@ -34,6 +35,9 @@ ___
 
 Revision History 
 ----------------
+Dec 2018 version 1.3.5
+- Fixed RTC (re)declaration clash with SAMD architecture.
+
 Jun 2018 version 1.3.4
 - Cleaned up dependency on ESP8266 for constructor change.
 
@@ -351,7 +355,9 @@ private:
   void init(void);
 };
 
+#ifndef ARDUINO_ARCH_SAMD
 extern MD_DS1307 RTC;     ///< Library created instance of the RTC class
+#endif
 
 #endif
 

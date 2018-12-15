@@ -12,4 +12,6 @@ Example code supplied to
 * Manage the DS1307 using the Serial Console
 * Display the time on a LCD display
 
+If you like and use this library please consider making a small donation using [PayPal](https://paypal.me/MajicDesigns/4USD)
+
 [Library Documentation](https://majicdesigns.github.io/MD_DS1307/)
