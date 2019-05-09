@@ -34,7 +34,7 @@ void usage(void)
   PRINTS("\n\nc n v\twrite the value v to status n, where n is");
   PRINTS("\n\t0 - Clock Halt (n 0=run, 1=halt)");
   PRINTS("\n\t1 - SQW Enable(n 0=halt, 1=run)");
-  PRINTS("\n\t2 - SQW Type (on) (n 1=1Hz, 2=4Mhz, 3=8Mhz, 4=32MHz)");
+  PRINTS("\n\t2 - SQW Type (on) (n 1=1Hz, 2=4kHz, 3=8kHz, 4=32kHz)");
   PRINTS("\n\t3 - SQW Type (off) (n 0=low, 1=high)");
   PRINTS("\n\t4 - 12 hour mode (n 0=24h, 1=12h)\n");
 }
